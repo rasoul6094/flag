@@ -10,7 +10,7 @@ int myfind(T* begin, T* end, F f) {
 
         //?
         
-        if (f()) {
+        if (f(*itr)) {
             return itr - begin;
         }
             
@@ -115,7 +115,7 @@ void print() {
 }
 
 void addStudent(string username, string password, int grade) {
-    int index = myfind(users , users + user_cnt , []() {return 1; }) ;
+    int index = myfind(users , users + user_cnt , [=](AbstractUser* us) {return us->getUsername() == username && us->isPasswordCorrect(password); });
     if (index != -1) {
         return;
     }
@@ -152,8 +152,8 @@ int main() {
             cin >> password;
            /*auto afgj = [=](AbstractUser* us) {
                 return username == us->getUsername() && us->isPasswordCorrect(password); }*/
-            int index = myfind(users, users + user_cnt, []() {return 1; });
-                
+            int index = myfind(users, users + user_cnt, [=](AbstractUser* u1)
+     { return (u1->getUsername() == username && u1->isPasswordCorrect(password)); });
            /* int index = myfind(users, users + user_cnt, afgj );*/
             if (index != -1) {
                 current_user = users[index];
